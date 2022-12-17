@@ -1,16 +1,28 @@
 from tkinter import *
-from tkinter import ttk
 
+def ShowNameDataBtn():
+    user_name = ent.get()
+    
+    print(user_name)
 
-def CreateWindow():
-    root_frame = Tk()
-    root_frame.title("VLAKOVÝ DISPEČING")
-    root_frame.geometry("800x500")
+root_frame = Tk()
+root_frame.geometry("1000x600")
+root_frame.title("VLAKOVÝ DISPEČING")
+root_frame.config(background="black")
 
-    icon = PhotoImage(file="icon.gif")
-    root_frame.iconphoto(True, icon)
+icon = PhotoImage(file="icon.gif")
+root_frame.iconphoto(True, icon)
 
-    root_frame.mainloop()
+main_label = Label(root_frame, text="Vitajte na pracovisku vlakového dispečingu pre trať Prievidza - Chynorany", fg="white", bg="black", font=("Century Schoolbook", 17))
+main_label.place(x = 120, y = 200)
 
+name_label = Label(root_frame, text="Zadajte Vaše meno: ", fg="white", bg="black")
+name_label.place(x = 330, y = 300)
 
-CreateWindow()
+ent = Entry(root_frame)
+ent.place(x = 450, y = 300)
+
+btn = Button(root_frame, text="ENTER", command=ShowNameDataBtn)
+btn.place(x = 580, y = 297)
+
+root_frame.mainloop()
