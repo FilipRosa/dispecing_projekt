@@ -1,4 +1,5 @@
 from tkinter import *
+from PIL import Image
 
 root_frame = Tk()
 root_frame.geometry("1000x600")
@@ -6,6 +7,11 @@ root_frame.title("VLAKOVÝ DISPEČING")
 root_frame.config(background="black")
 icon = PhotoImage(file="icon.gif")
 root_frame.iconphoto(True, icon)
+
+
+def OpenScheme():
+    scheme_img = Image.open("scheme.png")
+    return scheme_img.show()
 
 def FirstPage():
     def SecondPage():
@@ -15,10 +21,14 @@ def FirstPage():
         main_label_2 = Label(root_frame, text="Prievidza - Chynorany", fg="white", bg="black", font=("Century Schoolbook", 17))
         main_label_2.place(x = 120, y = 200)
 
+        btn_scheme = Button(root_frame, text="Mapa", command=OpenScheme)
+        btn_scheme.place(x = 450, y = 300)
+        
+
     main_label = Label(root_frame, text="Vitajte na pracovisku vlakového dispečingu pre trať Prievidza - Chynorany", fg="white", bg="black", font=("Century Schoolbook", 17))
     main_label.place(x = 120, y = 200)
 
-    btn = Button(root_frame, text="ZAČAŤ HRAŤ", command=SecondPage)
+    btn = Button(root_frame, text="POĎME NA TO!", command=SecondPage)
     btn.place(x = 450, y = 300)
 
 FirstPage()
