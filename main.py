@@ -13,19 +13,29 @@ def OpenScheme():
     scheme_img = Image.open("scheme.png")
     return scheme_img.show()
 
-def SchemeButton():
-    return Button(root_frame, text="Mapa", command=OpenScheme)
 
 def FirstPage():
     def FirstPageWithNames():
         def SecondPage():
             def ThirdPage():
-                SchemeButton().destroy()
                 main_label_2.destroy()
+                scheme_button.destroy()
                 btn_next.destroy()
                 text.destroy()
+                
+                def PrintCommands():
+                    print_text = command_input.get()
+                    Label(root_frame, text=print_text).place(x = 220, y = 500)
 
-                SchemeButton().place(x = 220, y = 15)
+
+                command_input = Entry(root_frame)
+                command_input.place(x = 220, y = 200, height=200, width=500)
+
+                print_button = Button(root_frame, text="Print", command= PrintCommands)
+                print_button.place(x = 220, y = 450)
+
+                scheme_button_2 = Button(root_frame, text="Mapa", command=OpenScheme)
+                scheme_button_2.place(x = 220, y = 15)
 
                 text_score = Text(root_frame, height=3, width=20)
                 text_score.place(x = 5, y = 10)
@@ -39,7 +49,7 @@ def FirstPage():
                 text_time.place(x = 600, y = 10)
                 text_time.insert(END, localtime)
 
-        
+            # SecondPage
             main_label.destroy()
             btn.destroy()
 
@@ -55,13 +65,15 @@ def FirstPage():
 
                         Proin nec ultrices nisl. Duis arcu ligula, pharetra non arcu eget, ultricies condimentum nulla. Donec feugiat sed ipsum vitae bibendum. Nam a lacus augue. Cras nisi nisi, vulputate ac malesuada ut, pretium vitae ipsum. Nunc lacinia, odio vitae ullamcorper facilisis, dolor ante lacinia erat, vitae facilisis tellus dolor ut orci. Proin sit amet facilisis nulla. Mauris lectus felis, mattis dapibus mollis sed, sollicitudin non lectus. Duis imperdiet pulvinar. """
 
-            SchemeButton().place(x = 450, y = 535)
+            scheme_button = Button(root_frame, text="Mapa", command=OpenScheme)
+            scheme_button.place(x = 450, y = 535)
 
             btn_next = Button(root_frame, text="Pokyny mám prečítané, môžem ísť hrať!", command=ThirdPage)
             btn_next.place(x = 520, y = 535)
 
             text.insert(END, rules)
 
+        # FirstPageWithNames
         user_name_get = user_name.get()
 
         user_label.destroy()
@@ -74,7 +86,7 @@ def FirstPage():
         btn = Button(root_frame, text="POĎME NA TO!", command=SecondPage)
         btn.place(x = 450, y = 300)
 
-
+    # FirstPage
     user_label = Label(root_frame, text="Zadajte svoje meno", fg="white", bg="black", font=("Century Schoolbook", 25))
     user_label.place(x = 330, y = 200)
 
