@@ -1,7 +1,8 @@
 class Train:
-    def __init__(self,name,route,position,speed):
-        self.name = name
-        self.route = route
+    def __init__(self,category,first_station,last_station,position,speed):
+        self.category = category
+        self.first_station = first_station
+        self.last_station = last_station
         self.position = position
         self.speed = speed
 
