@@ -11,6 +11,13 @@ class Train:
         self.delay = delay
         self.speed = speed
 
+class Track:
+    def __init__(self,station,track):
+        self.station = station
+        self.track = track
+
+
+
 #Úvodné texty
 user_name = input("Zadaj svoje meno: ")
 
@@ -84,9 +91,34 @@ while True:
             for item in train_station:
                 if item == "Prievidza" or item == "Nováky" or item == "Žilina" or item == "Čadca" or item == "Kraľovany":
                     print("Koľaj v stanici ", item," : ", end='')
-                    track_number = input()
+                    track_number = int(input())
 
-                    print(functions.IsTrackFree(item,track_number))
+                    if item == "Prievidza":
+                        item = 0
+                    elif item == "Koš":
+                        item = 1
+                    elif item == "Nováky":
+                        item = 2
+                    elif item == "Partizánske":
+                        item = 3
+                    elif item == "Žilina východ":
+                        item = 4
+                    elif item == "Žilina":
+                        item = 5
+                    elif item == "Žilina hájik":
+                        item = 6
+                    elif item == "Tekovany":
+                        item = 7
+                    elif item == "Lučivná":
+                        item = 8
+                    elif item == "Čadca":
+                        item = 9
+                    elif item == "Kraľovany":
+                        item = 10
+                    elif item == "...":
+                        item = 11
+
+                    functions.IsFree(item,track_number)
 
             
 

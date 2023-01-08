@@ -255,19 +255,24 @@ def GetTrainNumber(train_category):
     return Numbers(train_category)
 
 #funkcia na zistenie voľnosti koľaje
-def IsTrackFree(item,track_number):
-    Prievidza = [["platform"[True]],["platform"[True]],["platform"[True]],["platform"[True]],[True],[True]]
-    Koš = [["platform"[True]]]
-    Nováky = [["platform"[True]], ["platform"[True]], True]
-    Partizánske = [["platform"[True]]]
-    Žilina_východ = [["platform"[True]]]
-    Žilina = [["platform"[True]], ["platform"[True]], ["platform"[True]], ["platform"[True]], ["platform"[True]], ["platform"[True]], ["platform"[True]], ["platform"[True]]]
-    Žilina_hájik = [["platform"[True]]]
-    Tekovany = [["platform"[True]]]
-    Lučivná = [["platform"[True]]]
-    Čadca = [["platform"[True]], ["platform"[True]], ["platform"[True]], ["platform"[True]]]
-    Kraľovany = [["platform"[True]], ["platform"[True]]]
-    n_e_x_t = [True]
-
-    if item == "Prievidza":
-        return Prievidza[track_number]["platform"]
+def IsFree(item,track_number):
+    stations = [
+        [True,True,True,True,True,True], #prievidza
+        [True], #koš
+        [True,True,True], #nováky
+        [True], #partizánske
+        [True], #žilina východ
+        [True,True,True,True,True,True,True,True], #žilina
+        [True], #žilina hájik
+        [True], #tekovany
+        [True], #lučivná
+        [True,True,True,True], #čadca
+        [True,True], #kraľovany
+        [True] #...
+    ]
+        
+    if stations[item][track_number] == True:
+        stations[item][track_number] = False
+        print("Žiadosť o obsadenie koľaje úspešná.")
+    elif stations[item][track_number] == False:
+        print("Koľaj obsadená.")
