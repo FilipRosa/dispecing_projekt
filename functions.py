@@ -15,215 +15,8 @@ def Numbers(train_category):
         return random.randint(5000, 5099)
     elif train_category == ['Zr']:
         return random.randint(1880, 1889)
-    else:
-        return random.randint(700, 719)
-
-#funkcia pre určenie medziľahlých staníc vlaku
-def GetStations(train_category,train_first_station,train_second_station):
-    #osobný vlak
-    if train_category == ['Os']:
-        if train_first_station == ['Prievidza']:
-            if train_second_station == ['Čadca']:
-                return ['Koš','Nováky','Partizánske','Žilina-východ','Žilina','Lučivná']
-            elif train_second_station == ['Žilina']:
-                return ['Koš','Nováky','Partizánske','Žilina-východ']
-            elif train_second_station == ['Kraľovany']:
-                return ['Koš','Nováky','Partizánske','Žilina-východ','Žilina','Lučivná','Čadca']
-            elif train_second_station == ['...']:
-                return ['Koš','Nováky','Partizánske','Žilina-východ','Žilina','Lučivná','Čadca','Kraľovany']
-            elif train_second_station == ['Tekovany']:
-                return ['Koš','Nováky','Partizánske','Žilina-východ','Žilina','Žilina-Hájik']
-        elif train_first_station == ['Žilina']:
-            if train_second_station == ['Čadca']:
-                return ['Lučivná']
-            elif train_second_station == ['Prievidza']:
-                return ['Žilina-východ','Partizánske','Nováky','Koš']
-            elif train_second_station == ['Kraľovany']:
-                return ['Lučivná','Čadca']
-            elif train_second_station == ['...']:
-                return ['Lučivná','Čadca','Kraľovany']
-            elif train_second_station == ['Tekovany']:
-                return ['Žilina-Hájik']
-        elif train_first_station == ['Čadca']:
-            if train_second_station == ['Žilina']:
-                return ['Lučivná']
-            elif train_second_station == ['Prievidza']:
-                return ['Lučivná','Žilina','Žilina-východ','Partizánske','Nováky','Koš']
-            elif train_second_station == ['Kraľovany']:
-                return ['']
-            elif train_second_station == ['...']:
-                return ['Kraľovany']
-            elif train_second_station == ['Tekovany']:
-                return ['Lučivná','Žilina','Žilina-Hájik']
-        elif train_first_station == ['Kraľovany']:
-            if train_second_station == ['Žilina']:
-                return ['Čadca','Lučivná']
-            elif train_second_station == ['Prievidza']:
-                return ['Čadca','Lučivná','Žilina','Žilina-východ','Partizánske','Nováky','Koš']
-            elif train_second_station == ['Čadca']:
-                return ['']
-            elif train_second_station == ['...']:
-                return ['']
-            elif train_second_station == ['Tekovany']:
-                return ['Čadca','Lučivná','Žilina','Žilina-Hájik']
-        elif train_first_station == ['...']:
-            if train_second_station == ['Žilina']:
-                return ['Kraľovany','Čadca','Lučivná']
-            elif train_second_station == ['Prievidza']:
-                return ['Kraľovany','Čadca','Lučivná','Žilina','Žilina-východ','Partizánske','Nováky','Koš']
-            elif train_second_station == ['Čadca']:
-                return ['Kraľovany']
-            elif train_second_station == ['Kraľovany']:
-                return ['']
-            elif train_second_station == ['Tekovany']:
-                return ['Kraľovany','Čadca','Lučivná','Žilina','Žilina-Hájik']
-        elif train_first_station == ['Tekovany']:
-            if train_second_station == ['Žilina']:
-                return ['Žilina-Hájik']
-            elif train_second_station == ['Prievidza']:
-                return ['Žilina-Hájik','Žilina','Žilina-východ','Partizánske','Nováky','Koš']
-            elif train_second_station == ['Čadca']:
-                return ['Žilina-Hájik','Žilina','Lučivná']
-            elif train_second_station == ['Kraľovany']:
-                return ['Žilina-Hájik','Žilina','Lučivná','Čadca']
-            elif train_second_station == ['...']:
-                return ['Žilina-Hájik','Žilina','Lučivná','Čadca','Kraľovany']   
-    #zrýchlený vlak    
-    elif train_category == ['Zr']:
-        if train_first_station == ['Prievidza']:
-            if train_second_station == ['Čadca']:
-                return ['Nováky','Partizánske','Žilina-východ','Žilina']
-            elif train_second_station == ['Žilina']:
-                return ['Nováky','Partizánske','Žilina-východ']
-            elif train_second_station == ['Kraľovany']:
-                return ['Nováky','Partizánske','Žilina-východ','Žilina','Čadca']
-            elif train_second_station == ['...']:
-                return ['Nováky','Partizánske','Žilina-východ','Žilina','Čadca','Kraľovany']
-            elif train_second_station == ['Tekovany']:
-                return ['Nováky','Partizánske','Žilina-východ','Žilina']
-        elif train_first_station == ['Žilina']:
-            if train_second_station == ['Čadca']:
-                return ['']
-            elif train_second_station == ['Prievidza']:
-                return ['Žilina-východ','Partizánske','Nováky']
-            elif train_second_station == ['Kraľovany']:
-                return ['Čadca']
-            elif train_second_station == ['...']:
-                return ['Čadca','Kraľovany']
-            elif train_second_station == ['Tekovany']:
-                return ['']
-        elif train_first_station == ['Čadca']:
-            if train_second_station == ['Žilina']:
-                return ['']
-            elif train_second_station == ['Prievidza']:
-                return ['Žilina','Žilina-východ','Partizánske','Nováky']
-            elif train_second_station == ['Kraľovany']:
-                return ['']
-            elif train_second_station == ['...']:
-                return ['Kraľovany']
-            elif train_second_station == ['Tekovany']:
-                return ['Žilina']
-        elif train_first_station == ['Kraľovany']:
-            if train_second_station == ['Žilina']:
-                return ['Čadca']
-            elif train_second_station == ['Prievidza']:
-                return ['Čadca','Žilina','Žilina-východ','Partizánske','Nováky']
-            elif train_second_station == ['Čadca']:
-                return ['']
-            elif train_second_station == ['...']:
-                return ['']
-            elif train_second_station == ['Tekovany']:
-                return ['Čadca','Žilina']
-        elif train_first_station == ['...']:
-            if train_second_station == ['Žilina']:
-                return ['Kraľovany','Čadca']
-            elif train_second_station == ['Prievidza']:
-                return ['Kraľovany','Čadca','Žilina','Žilina-východ','Partizánske','Nováky']
-            elif train_second_station == ['Čadca']:
-                return ['Kraľovany']
-            elif train_second_station == ['Kraľovany']:
-                return ['']
-            elif train_second_station == ['Tekovany']:
-                return ['Kraľovany','Čadca','Žilina']
-        elif train_first_station == ['Tekovany']:
-            if train_second_station == ['Žilina']:
-                return ['']
-            elif train_second_station == ['Prievidza']:
-                return ['Žilina','Žilina-východ','Partizánske','Nováky']
-            elif train_second_station == ['Čadca']:
-                return ['Žilina']
-            elif train_second_station == ['Kraľovany']:
-                return ['Žilina','Čadca']
-            elif train_second_station == ['...']:
-                return ['Žilina','Čadca','Kraľovany']
-    #rýchlik   
     elif train_category == ['R']:
-        if train_first_station == ['Prievidza']:
-            if train_second_station == ['Čadca']:
-                return ['Partizánske','Žilina']
-            elif train_second_station == ['Žilina']:
-                return ['Partizánske']
-            elif train_second_station == ['Kraľovany']:
-                return ['Partizánske','Žilina','Čadca']
-            elif train_second_station == ['...']:
-                return ['Partizánske','Žilina','Čadca','Kraľovany']
-            elif train_second_station == ['Tekovany']:
-                return ['Partizánske','Žilina']
-        elif train_first_station == ['Žilina']:
-            if train_second_station == ['Čadca']:
-                return ['']
-            elif train_second_station == ['Prievidza']:
-                return ['Partizánske']
-            elif train_second_station == ['Kraľovany']:
-                return ['Čadca']
-            elif train_second_station == ['...']:
-                return ['Čadca','Kraľovany']
-            elif train_second_station == ['Tekovany']:
-                return ['']
-        elif train_first_station == ['Čadca']:
-            if train_second_station == ['Žilina']:
-                return ['']
-            elif train_second_station == ['Prievidza']:
-                return ['Žilina','Partizánske']
-            elif train_second_station == ['Kraľovany']:
-                return ['']
-            elif train_second_station == ['...']:
-                return ['Kraľovany']
-            elif train_second_station == ['Tekovany']:
-                return ['Žilina']
-        elif train_first_station == ['Kraľovany']:
-            if train_second_station == ['Žilina']:
-                return ['Čadca']
-            elif train_second_station == ['Prievidza']:
-                return ['Čadca','Žilina','Partizánske']
-            elif train_second_station == ['Čadca']:
-                return ['']
-            elif train_second_station == ['...']:
-                return ['']
-            elif train_second_station == ['Tekovany']:
-                return ['Čadca','Žilina']
-        elif train_first_station == ['...']:
-            if train_second_station == ['Žilina']:
-                return ['Kraľovany','Čadca']
-            elif train_second_station == ['Prievidza']:
-                return ['Kraľovany','Čadca','Žilina','Partizánske']
-            elif train_second_station == ['Čadca']:
-                return ['Kraľovany']
-            elif train_second_station == ['Kraľovany']:
-                return ['']
-            elif train_second_station == ['Tekovany']:
-                return ['Kraľovany','Čadca','Žilina']
-        elif train_first_station == ['Tekovany']:
-            if train_second_station == ['Žilina']:
-                return ['']
-            elif train_second_station == ['Prievidza']:
-                return ['Žilina','Partizánske']
-            elif train_second_station == ['Čadca']:
-                return ['Žilina']
-            elif train_second_station == ['Kraľovany']:
-                return ['Žilina','Čadca']
-            elif train_second_station == ['...']:
-                return ['Žilina','Čadca','Kraľovany']
+        return random.randint(700, 719)
 
 #funkcia pre random generovanie kategória vlaku
 def GetTrainCategory(train_categories):
@@ -234,13 +27,8 @@ def GetTrainFirstStation(train_stations):
     return random.sample(train_stations, k = 1)
 
 #funkcia pre random generovanie koncovej stanice vlaku
-def GetTrainSecondStation(train_stations):
-    station = random.sample(train_stations, k = 1)
-
-    if GetTrainFirstStation(train_stations) == station:
-        station = random.sample(train_stations, k = 1)
-    else:
-        return station
+def GetTrainSecondStation(train_stations,train_first_station):
+    return random.sample(train_stations, k = 1)
 
 #funkcia pre random generovanie meškania vlaku
 def GetTrainDelay(train_delays):
@@ -254,25 +42,58 @@ def GetTrainSpeed(train_category):
 def GetTrainNumber(train_category):
     return Numbers(train_category)
 
-#funkcia na zistenie voľnosti koľaje
-def IsFree(item,track_number):
-    stations = [
-        [True,True,True,True,True,True], #prievidza
-        [True], #koš
-        [True,True,True], #nováky
-        [True], #partizánske
-        [True], #žilina východ
-        [True,True,True,True,True,True,True,True], #žilina
-        [True], #žilina hájik
-        [True], #tekovany
-        [True], #lučivná
-        [True,True,True,True], #čadca
-        [True,True], #kraľovany
-        [True] #...
-    ]
-        
-    if stations[item][track_number] == True:
-        stations[item][track_number] = False
-        print("Žiadosť o obsadenie koľaje úspešná.")
-    elif stations[item][track_number] == False:
-        print("Koľaj obsadená.")
+#funkcia pre vrátenie hodnoty item
+def GetItem(item):
+    if item == "Prievidza":
+        return 0
+    elif item == "Koš":
+        return 1
+    elif item == "Nováky":
+        return 2
+    elif item == "Partizánske":
+        return 3
+    elif item == "Žilina východ":
+        return 4
+    elif item == "Žilina":
+        return 5
+    elif item == "Žilina hájik":
+        return 6
+    elif item == "Tekovany":
+        return 7
+    elif item == "Lučivná":
+        return 8
+    elif item == "Čadca":
+        return 9
+    elif item == "Kraľovany":
+        return 10
+    elif item == "...":
+        return 11
+
+def GetNameOfStation(item):
+    if item == 0:
+        return "Prievidza"
+    elif item == 1:
+        return "Koš"
+    elif item == 2:
+        return "Nováky"
+    elif item == 3:
+        return "Partizánske"
+    elif item == 4:
+        return "Žilina východ"
+    elif item == 5:
+        return "Žilina"
+    elif item == 6:
+        return "Žilina hájik"
+    elif item == 7:
+        return "Tekovany"
+    elif item == 8:
+        return "Lučivná"
+    elif item == 9:
+        return "Čadca"
+    elif item == 10:
+        return "Kraľovany"
+    elif item == 11:
+        return "..."
+
+def Sequence(train_category,train_number):
+    print(train_category, train_number, " odišiel zo stanice ", )
