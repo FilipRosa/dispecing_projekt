@@ -94,6 +94,3 @@ def GetNameOfStation(item):
         return "Kraľovany"
     elif item == 11:
         return "..."
-
-def Sequence(train_category,train_number):
-    print(train_category, train_number, " odišiel zo stanice ", )
