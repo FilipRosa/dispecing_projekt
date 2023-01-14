@@ -267,6 +267,3 @@ while game == True:
                 game = False
     else:
         user_name = input("Zadaj svoje meno, inak nebudeš hrať!: ")
-
-
-
