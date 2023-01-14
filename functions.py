@@ -308,6 +308,7 @@ def ToField(train_id, train_category, train_number, train_first_station, train_s
 
 #funkcia pre vypísanie z poľa
 def PrintField(train_field,i):
+    
     for item in train_field:
         if item['train_id'] == i:
             print(f"{str(item['train_id']):<10}{str(item['train_category']):<14}{str(item['train_number']):<14}{str(item['train_first_station']):<23}{str(item['train_second_station']):<22}{str(item['train_delay']):<16}{str(item['train_speed'])}")

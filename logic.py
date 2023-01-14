@@ -149,6 +149,8 @@ while game == True:
                 while selected_id in train_field:
                     print("Nevybral si správne vlak.")
                     selected_id = int(input("Vyber si vlak, ktorý chceš odbaviť tým, že napíšeš jeho id: "))
+
+
                 
                 #Premenné pre vybraný vlak
                 selected_train = train_field[selected_id]
