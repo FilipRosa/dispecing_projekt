@@ -1,238 +1,6 @@
-import random
 import functions
-import re
 import time
-
-class Train:
-    def __init__(self):
-        self.train_field = []
-
-    #funkcia pre pridanie do poľa
-    def ToField(self, train_id, train_category, train_number, train_first_station, train_second_station, train_delay, train_speed):
-        variable = {'train_id': train_id, 'train_category': train_category, 'train_number' : train_number, 'train_first_station' : train_first_station, 'train_second_station': train_second_station, 'train_delay': train_delay, 'train_speed': train_speed}
-        self.train_field.append(variable)
-
-    #funkcia pre odstránenie z poľa
-    def DelField(self, id):
-        self.train_field = [var for var in self.train_field if var['train_id'] != id]
-
-    #funkcia pre vypísanie z poľa
-    def PrintField(self):
-        for item in self.train_field:
-            print(f"{str(item['train_id']):<10}{str(item['train_category']):<14}{str(item['train_number']):<14}{str(item['train_first_station']):<23}{str(item['train_second_station']):<22}{str(item['train_delay']):<16}{str(item['train_speed'])}")
-
-
-    #funkcia pre určenie medziľahlých staníc vlaku
-    def GetStations(self):
-        #osobný vlak
-        if self.category == ['Os']:
-            if self.first_station == ['Prievidza']:
-                if self.last_station == ['Čadca']:
-                    return ['Koš','Nováky','Partizánske','Žilina-východ','Žilina','Lučivná']
-                elif self.last_station == ['Žilina']:
-                    return ['Koš','Nováky','Partizánske','Žilina-východ']
-                elif self.last_station == ['Kraľovany']:
-                    return ['Koš','Nováky','Partizánske','Žilina-východ','Žilina','Lučivná','Čadca']
-                elif self.last_station == ['...']:
-                    return ['Koš','Nováky','Partizánske','Žilina-východ','Žilina','Lučivná','Čadca','Kraľovany']
-                elif self.last_station == ['Tekovany']:
-                    return ['Koš','Nováky','Partizánske','Žilina-východ','Žilina','Žilina-Hájik']
-            elif self.first_station == ['Žilina']:
-                if self.last_station == ['Čadca']:
-                    return ['Lučivná']
-                elif self.last_station == ['Prievidza']:
-                    return ['Žilina-východ','Partizánske','Nováky','Koš']
-                elif self.last_station == ['Kraľovany']:
-                    return ['Lučivná','Čadca']
-                elif self.last_station == ['...']:
-                    return ['Lučivná','Čadca','Kraľovany']
-                elif self.last_station == ['Tekovany']:
-                    return ['Žilina-Hájik']
-            elif self.first_station == ['Čadca']:
-                if self.last_station == ['Žilina']:
-                    return ['Lučivná']
-                elif self.last_station == ['Prievidza']:
-                    return ['Lučivná','Žilina','Žilina-východ','Partizánske','Nováky','Koš']
-                elif self.last_station == ['Kraľovany']:
-                    return ['']
-                elif self.last_station == ['...']:
-                    return ['Kraľovany']
-                elif self.last_station == ['Tekovany']:
-                    return ['Lučivná','Žilina','Žilina-Hájik']
-            elif self.first_station == ['Kraľovany']:
-                if self.last_station == ['Žilina']:
-                    return ['Čadca','Lučivná']
-                elif self.last_station == ['Prievidza']:
-                    return ['Čadca','Lučivná','Žilina','Žilina-východ','Partizánske','Nováky','Koš']
-                elif self.last_station == ['Čadca']:
-                    return ['']
-                elif self.last_station == ['...']:
-                    return ['']
-                elif self.last_station == ['Tekovany']:
-                    return ['Čadca','Lučivná','Žilina','Žilina-Hájik']
-            elif self.first_station == ['...']:
-                if self.last_station == ['Žilina']:
-                    return ['Kraľovany','Čadca','Lučivná']
-                elif self.last_station == ['Prievidza']:
-                    return ['Kraľovany','Čadca','Lučivná','Žilina','Žilina-východ','Partizánske','Nováky','Koš']
-                elif self.last_station == ['Čadca']:
-                    return ['Kraľovany']
-                elif self.last_station == ['Kraľovany']:
-                    return ['']
-                elif self.last_station == ['Tekovany']:
-                    return ['Kraľovany','Čadca','Lučivná','Žilina','Žilina-Hájik']
-            elif self.first_station == ['Tekovany']:
-                if self.last_station == ['Žilina']:
-                    return ['Žilina-Hájik']
-                elif self.last_station == ['Prievidza']:
-                    return ['Žilina-Hájik','Žilina','Žilina-východ','Partizánske','Nováky','Koš']
-                elif self.last_station == ['Čadca']:
-                    return ['Žilina-Hájik','Žilina','Lučivná']
-                elif self.last_station == ['Kraľovany']:
-                    return ['Žilina-Hájik','Žilina','Lučivná','Čadca']
-                elif self.last_station == ['...']:
-                    return ['Žilina-Hájik','Žilina','Lučivná','Čadca','Kraľovany']   
-        #zrýchlený vlak    
-        elif self.category == ['Zr']:
-            if self.first_station == ['Prievidza']:
-                if self.last_station == ['Čadca']:
-                    return ['Nováky','Partizánske','Žilina-východ','Žilina']
-                elif self.last_station == ['Žilina']:
-                    return ['Nováky','Partizánske','Žilina-východ']
-                elif self.last_station == ['Kraľovany']:
-                    return ['Nováky','Partizánske','Žilina-východ','Žilina','Čadca']
-                elif self.last_station == ['...']:
-                    return ['Nováky','Partizánske','Žilina-východ','Žilina','Čadca','Kraľovany']
-                elif self.last_station == ['Tekovany']:
-                    return ['Nováky','Partizánske','Žilina-východ','Žilina']
-            elif self.first_station == ['Žilina']:
-                if self.last_station == ['Čadca']:
-                    return ['']
-                elif self.last_station == ['Prievidza']:
-                    return ['Žilina-východ','Partizánske','Nováky']
-                elif self.last_station == ['Kraľovany']:
-                    return ['Čadca']
-                elif self.last_station == ['...']:
-                    return ['Čadca','Kraľovany']
-                elif self.last_station == ['Tekovany']:
-                    return ['']
-            elif self.first_station == ['Čadca']:
-                if self.last_station == ['Žilina']:
-                    return ['']
-                elif self.last_station == ['Prievidza']:
-                    return ['Žilina','Žilina-východ','Partizánske','Nováky']
-                elif self.last_station == ['Kraľovany']:
-                    return ['']
-                elif self.last_station == ['...']:
-                    return ['Kraľovany']
-                elif self.last_station == ['Tekovany']:
-                    return ['Žilina']
-            elif self.first_station == ['Kraľovany']:
-                if self.last_station == ['Žilina']:
-                    return ['Čadca']
-                elif self.last_station == ['Prievidza']:
-                    return ['Čadca','Žilina','Žilina-východ','Partizánske','Nováky']
-                elif self.last_station == ['Čadca']:
-                    return ['']
-                elif self.last_station == ['...']:
-                    return ['']
-                elif self.last_station == ['Tekovany']:
-                    return ['Čadca','Žilina']
-            elif self.first_station == ['...']:
-                if self.last_station == ['Žilina']:
-                    return ['Kraľovany','Čadca']
-                elif self.last_station == ['Prievidza']:
-                    return ['Kraľovany','Čadca','Žilina','Žilina-východ','Partizánske','Nováky']
-                elif self.last_station == ['Čadca']:
-                    return ['Kraľovany']
-                elif self.last_station == ['Kraľovany']:
-                    return ['']
-                elif self.last_station == ['Tekovany']:
-                    return ['Kraľovany','Čadca','Žilina']
-            elif self.first_station == ['Tekovany']:
-                if self.last_station == ['Žilina']:
-                    return ['']
-                elif self.last_station == ['Prievidza']:
-                    return ['Žilina','Žilina-východ','Partizánske','Nováky']
-                elif self.last_station == ['Čadca']:
-                    return ['Žilina']
-                elif self.last_station == ['Kraľovany']:
-                    return ['Žilina','Čadca']
-                elif self.last_station == ['...']:
-                    return ['Žilina','Čadca','Kraľovany']
-        #rýchlik   
-        elif self.category == ['R']:
-            if self.first_station == ['Prievidza']:
-                if self.last_station == ['Čadca']:
-                    return ['Partizánske','Žilina']
-                elif self.last_station == ['Žilina']:
-                    return ['Partizánske']
-                elif self.last_station == ['Kraľovany']:
-                    return ['Partizánske','Žilina','Čadca']
-                elif self.last_station == ['...']:
-                    return ['Partizánske','Žilina','Čadca','Kraľovany']
-                elif self.last_station == ['Tekovany']:
-                    return ['Partizánske','Žilina']
-            elif self.first_station == ['Žilina']:
-                if self.last_station == ['Čadca']:
-                    return ['']
-                elif self.last_station == ['Prievidza']:
-                    return ['Partizánske']
-                elif self.last_station == ['Kraľovany']:
-                    return ['Čadca']
-                elif self.last_station == ['...']:
-                    return ['Čadca','Kraľovany']
-                elif self.last_station == ['Tekovany']:
-                    return ['']
-            elif self.first_station == ['Čadca']:
-                if self.last_station == ['Žilina']:
-                    return ['']
-                elif self.last_station == ['Prievidza']:
-                    return ['Žilina','Partizánske']
-                elif self.last_station == ['Kraľovany']:
-                    return ['']
-                elif self.last_station == ['...']:
-                    return ['Kraľovany']
-                elif self.last_station == ['Tekovany']:
-                    return ['Žilina']
-            elif self.first_station == ['Kraľovany']:
-                if self.last_station == ['Žilina']:
-                    return ['Čadca']
-                elif self.last_station == ['Prievidza']:
-                    return ['Čadca','Žilina','Partizánske']
-                elif self.last_station == ['Čadca']:
-                    return ['']
-                elif self.last_station == ['...']:
-                    return ['']
-                elif self.last_station == ['Tekovany']:
-                    return ['Čadca','Žilina']
-            elif self.first_station == ['...']:
-                if self.last_station == ['Žilina']:
-                    return ['Kraľovany','Čadca']
-                elif self.last_station == ['Prievidza']:
-                    return ['Kraľovany','Čadca','Žilina','Partizánske']
-                elif self.last_station == ['Čadca']:
-                    return ['Kraľovany']
-                elif self.last_station == ['Kraľovany']:
-                    return ['']
-                elif self.last_station == ['Tekovany']:
-                    return ['Kraľovany','Čadca','Žilina']
-            elif self.first_station == ['Tekovany']:
-                if self.last_station == ['Žilina']:
-                    return ['']
-                elif self.last_station == ['Prievidza']:
-                    return ['Žilina','Partizánske']
-                elif self.last_station == ['Čadca']:
-                    return ['Žilina']
-                elif self.last_station == ['Kraľovany']:
-                    return ['Žilina','Čadca']
-                elif self.last_station == ['...']:
-                    return ['Žilina','Čadca','Kraľovany']
-
-
-
-
-
+import os
 
 class Track:
     def __init__(self,station,track):
@@ -251,7 +19,7 @@ class Track:
     def StillFree(self,stations):
         i = 1
 
-        if self.station == "...":
+        if self.station == "..." or self.station == "Koš" or self.station == "Partizánske" or self.station == "Žilina-východ" or self.station == "Žilina-Hájik" or self.station == "Lučivná":
             pass
         else:
             for item in stations[self.station]:
@@ -273,7 +41,6 @@ class Track:
         if stations[self.station][self.track] == False:
             stations[self.station][self.track] = True
 
-        
         time.sleep(2)
 
 
@@ -283,13 +50,11 @@ user_name = input("Zadaj svoje meno: ")
 #Dáta
 score = 0
 level = 1
-
-j = 0
-train_id = 0
-train_categories = ["Os","Zr","R"]
-train_stations = ["Prievidza","Žilina","Čadca","Kraľovany","Tekovany","..."]
+train_categories = ['Os','Zr','R']
+train_stations = ['Prievidza','Žilina','Čadca','Kraľovany','Tekovany','...']
 train_delays = [0, 5, 10]
-trains = []
+game = True
+
 
 stations = [
     [True,True,True,True,True,True], #prievidza
@@ -306,140 +71,160 @@ stations = [
     [True] #...
 ]
 
-game = True
-
-#Podmienka pre pokračovanie s užívateľským menom
-while game == True:
+if game == True:
+    #Podmienka pre pokračovanie s užívateľským menom
     if user_name != "":
-
+        #Privítanie + pokyny
         print("Ahoj " + user_name + ", vitaj v hre VLAKOVÝ DISPEČING!")
+        time.sleep(0.5)
         print("...pokyny...")
+        time.sleep(2)
 
-        while score >= 0:
-            #Výpis základných info /level, skóre/    
-            print("")
-            print("---------------------------------------")
-            print("LEVEL ", level)
-            print("")
-            print("Tvoje skóre: ", score)
-            print("")
+        #Podmienka pre ukončenie hry so skóre < 0
+        if score >= 0:
+            train_field = []
+            while_counter = 1
 
-            i = 0
-            
-            print("Id:     Kategória:     Číslo:     Počiatočná stanica:     Konečná stanica:     Meškanie:     Max.rýchlosť:")
-
-            
-
-
-            while i < level:
-                #Získanie premenných z vlastných funkcií
-                train_category = functions.GetTrainCategory(train_categories)
-                train_number = functions.GetTrainNumber(train_category)
-                train_first_station = functions.GetTrainFirstStation(train_stations)
-                train_second_station = functions.GetTrainSecondStation(train_stations,train_first_station)
-                train_delay = functions.GetTrainDelay(train_delays)
-                train_speed = functions.GetTrainSpeed(train_category)
-
-                #Ošetrenie generovania rovnakých staníc
-                while train_first_station == train_second_station:
-                    train_first_station = functions.GetTrainFirstStation(train_stations)
-                    train_second_station = functions.GetTrainSecondStation(train_stations,train_first_station)
-
-                #Vyhodenie prvkov z poľa
-                for item in train_category:
-                    train_category = item
-
-                for item in train_first_station:
-                    train_first_station = item
-
-                for item in train_second_station:
-                    train_second_station = item
-
-                for item in train_delay:
-                    train_delay = item
-
-                train = Train()
-                train.ToField(train_id,train_category,train_number,train_first_station,train_second_station,train_delay,train_speed)
-                train.PrintField()
-                
-
-                
-                
-                train_id += 1
-                
-                i += 1
-                
-
-            while len(trains) >= 1:
-                #Výpis vlakov + tabuľka
-                print("Zoznam vlakov čakajúcich na spracovanie:")
-                
-                
-                
-
-                #Úvodné texty 2
+            #Cyklus pre opakovanie
+            while True:
+                #Výpis levelu a skóre    
                 print("")
-                train_id = int(input("Vyber si vlak, ktorý chceš odbaviť tým, že napíšeš jeho id: "))
+                print("---------------------------------------")
+                print("LEVEL ", level)
+                print("")
+                print("Tvoje skóre: ", score)
+                print("")
+                print("Id:     Kategória:     Číslo:     Počiatočná stanica:     Konečná stanica:     Meškanie:     Max.rýchlosť:")
+                
+                i = 0
+                train_id = 0
+                
+                
+
+                while i < level:
+                    field_lenght = len(train_field)
+                    false_lenght = field_lenght - 1
+                    if not train_field or false_lenght < i:
+                        #Získanie premenných z vlastných funkcií
+                        train_category = functions.GetTrainCategory(train_categories)
+                        train_number = functions.GetTrainNumber(train_category)
+                        train_first_station = functions.GetTrainFirstStation(train_stations)
+                        train_second_station = functions.GetTrainSecondStation(train_stations,train_first_station)
+                        train_delay = functions.GetTrainDelay(train_delays)
+                        train_speed = functions.GetTrainSpeed(train_category)
+
+                        #Ošetrenie generovania rovnakých staníc
+                        while train_first_station == train_second_station:
+                            train_first_station = functions.GetTrainFirstStation(train_stations)
+                            train_second_station = functions.GetTrainSecondStation(train_stations,train_first_station)
+
+                        #Vyhodenie stringov z poľa
+                        for item in train_category:
+                            train_category = item
+
+                        for item in train_first_station:
+                            train_first_station = item
+
+                        for item in train_second_station:
+                            train_second_station = item
+
+                        for item in train_delay:
+                            train_delay = item
+
+                        check = open("check.txt", "a")
+                        check.write(str(i))
+                        check.close
+                        check = open("check.txt","r")
+
+                        if while_counter == level:
+                            train_field.insert(i,functions.ToField(train_id,train_category,train_number,train_first_station,train_second_station,train_delay,train_speed))
+                        else:
+                            pass
+
+                            #for x in check:
+                             #   if x == str(i):
+                              #      pass
+                               # elif x == 0:
+                                #    pass
+                                #else:
+                                 #   train_field.insert(i,functions.ToField(train_id,train_category,train_number,train_first_station,train_second_station,train_delay,train_speed))
+                            
+                    
+                    functions.PrintField(train_field,i)
+                    train_id += 1
+                    i += 1
+                    
+                #Opakovanie do vyčerpania poľa
+                while_counter += 1
+                print("")
+                print("Zoznam vlakov čakajúcich na spracovanie:")
+
+                selected_id = int(input("Vyber si vlak, ktorý chceš odbaviť tým, že napíšeš jeho id: "))
+
+                if level == 1:
+                    selected_id -= 1
 
                 #Ošetrenie nesprávne zadaného id-čka
-                trains_lenght = len(trains)
-
-                while trains_lenght < (train_id + 1):
+                while field_lenght <= (selected_id):
                     print("Nevybral si správne vlak.")
-                    train_id = int(input("Vyber si vlak, ktorý chceš odbaviť tým, že napíšeš jeho id: "))
-                    
-                selected_train = trains[train_id]
+                    selected_id = int(input("Vyber si vlak, ktorý chceš odbaviť tým, že napíšeš jeho id: "))
+                
+                #Premenné pre vybraný vlak
+                selected_train = train_field[selected_id]
+                train_category = selected_train['train_category']
+                train_number = selected_train['train_number']
+                train_first_station = selected_train['train_first_station']
+                train_second_station = selected_train['train_second_station']
 
-                train_category = selected_train.category
-                train_number = selected_train.number
-                train_first_station = selected_train.first_station
-                train_second_station = selected_train.last_station
-
-                train_station = Train(train_id,train_category,train_number,train_first_station,train_second_station,train_delay,train_speed).GetStations()
+                train_station = functions.GetStations(train_category,train_first_station,train_second_station)
 
                 #Poriešenie riešenia bez medziľahlých staníc
                 if train_station == ['']:
                     print("Vlak ", train_category, train_number, " nemá žiadne medziľahlé stanice.")
-
+                    time.sleep(1)
+                    print("")
                     print("Teraz treba vybrať koľaje v jednotlivých staniciach, kde vlak zastavuje.")
 
                     #Výpis voľnosti koľají
-                    for item in train_second_station:
-                        track_auto_number = 0
-                        item = functions.GetItem(item)
-                        Track(item,track_auto_number).StillFree(stations)
-                        track_auto_number += 1
-
+                    print("Stanica ", train_second_station)
+                    track_auto_number = 0
+                    item = functions.GetItem(train_second_station)
+                    Track(item,track_auto_number).StillFree(stations)
+                    track_auto_number += 1
                 else:
                     print("Medziľahlé stanice vlaku ", train_category, train_number, " sú: ", train_station)
+                    time.sleep(1)
                     print("")
-                    time.sleep(2)
-
                     print("Teraz treba vybrať koľaje v jednotlivých staniciach, kde vlak zastavuje.")
+                    print("")
 
                     #Výpis voľnosti koľají
                     for item in train_station:
-                        track_auto_number = 0
-                        item = functions.GetItem(item)
-                        Track(item,track_auto_number).StillFree(stations)
-                        track_auto_number += 1
+                        if item == "..." or item == "Koš" or item == "Partizánske" or item == "Žilina-východ" or item == "Žilina-Hájik" or item == "Lučivná":
+                            pass
+                        else:
+                            print("Stanica ", item)
+                            track_auto_number = 0
+                            item = functions.GetItem(item)
+                            Track(item,track_auto_number).StillFree(stations)
+                            track_auto_number += 1
 
-                    for item in train_second_station:
-                        track_auto_number = 0
-                        item = functions.GetItem(item)
-                        Track(item,track_auto_number).StillFree(stations)
-                        track_auto_number += 1
-
+                    print("Stanica ", train_second_station)
+                    track_auto_number = 0
+                    item = functions.GetItem(train_second_station)
+                    Track(item,track_auto_number).StillFree(stations)
+                    track_auto_number += 1
 
                 if level <= 5 and (train_first_station == ['Tekovany'] or train_second_station == ['Tekovany']):
                     print("POZOR!!! V žst. Žilina musí ísť vlak na koľaj 6, 7 alebo 8!")
 
                 print("")
+                time.sleep(1)
 
                 #Zadávanie koľají
                 for item in train_station:
-                    if item == "Prievidza" or item == "Nováky" or item == "Žilina" or item == "Čadca" or item == "Kraľovany":
-                        print("Koľaj v stanici ", item," : ", end='')
+                    if item == 'Prievidza' or item == 'Nováky' or item == 'Žilina' or item == 'Čadca' or item == 'Kraľovany':
+                        print("Koľaj v stanici ", item, ": ", end='')
                         track_number = int(input()) - 1
 
                         item = functions.GetItem(item)
@@ -448,13 +233,9 @@ while game == True:
                     elif item == "" or item == "...":
                         pass
 
-                #Odstránenie zátvoriek z reťazca
-                for x in train_second_station:
-                    item = x
-                    
                 #Zadanie koľaje poslednej stanice
                 if item == "Prievidza" or item == "Žilina" or item == "Čadca" or item == "Kraľovany":
-                    print("Koľaj v konečnej stanici ", item," : ", end='')
+                    print("Koľaj v konečnej stanici ", item,": ", end='')
                     track_number = int(input()) - 1
 
                     item = functions.GetItem(item)
@@ -473,25 +254,32 @@ while game == True:
                 else:
                     for item in train_station:
                         item = functions.GetItem(item)
-                        x = functions.GetNameOfStation(item)
+                        train_second_station = functions.GetNameOfStation(item)
 
-                        if x != train_second_station and x != "...":
+                        if train_second_station != train_second_station and train_second_station != "...":
                             Track(item,track_number).Sequence(train_category,train_number,stations)
                             
                     print(train_category, train_number, " prichádza do stanice ", train_second_station)
 
-                trains.pop(train_id)
+                train_field.pop(selected_id)
 
                 score += 10
 
-            level += 1
+                if not train_field:
+                    level += 1
+                    while_counter = level
+                    check.close()
+                    os.remove("check.txt")   
+
+                print(level)
+                print(train_field)
 
             #GameOver
             if score < 0:
                 print(user_name, " prehral si!")
                 game = False
     else:
-        user_name = input("Zadaj svoje meno!: ")
+        user_name = input("Zadaj svoje meno, inak nebudeš hrať!: ")
 
 
 
