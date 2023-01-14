@@ -1,13 +1,12 @@
 import functions
 import time
-import os
 
 class Track:
     def __init__(self,station,track):
         self.station = station
         self.track = track
 
-    #funkcia na zistenie voľnosti koľaje
+    #Funkcia na zistenie voľnosti koľaje
     def IsFree(self,stations): 
         if stations[self.station][self.track] == True:
             stations[self.station][self.track] = False
@@ -15,7 +14,7 @@ class Track:
         elif stations[self.station][self.track] == False:
             print("Koľaj obsadená.")
 
-    #funkcia na vypísanie obsadenosti koľají
+    #Funkcia na vypísanie obsadenosti koľají
     def StillFree(self,stations):
         i = 1
 
@@ -24,22 +23,25 @@ class Track:
         else:
             for item in stations[self.station]:
                 if item == True:
-                    print("Koľaj č. ", i, " v stanici ", functions.GetNameOfStation(self.station), " je voľná.")
+                    print("Koľaj č. ", i, " je voľná.")
                     i += 1
                 elif item == False:
-                    print("Koľaj č. ", i, " v stanici ", functions.GetNameOfStation(self.station), " je obsadená.")
+                    print("Koľaj č. ", i, " je obsadená.")
                     i += 1
 
             print("")
 
-    #funkcia na sekvenciu
+    #Funkcia na sekvenciu
     def Sequence(self,train_category,train_number,stations):
         print(train_category, train_number, " prichádza do stanice ", functions.GetNameOfStation(self.station))
         time.sleep(2)
         print(train_category, train_number, " odišiel zo stanice ", functions.GetNameOfStation(self.station))
 
-        if stations[self.station][self.track] == False:
-            stations[self.station][self.track] = True
+        if self.station == "..." or self.station == "Koš" or self.station == "Partizánske" or self.station == "Žilina-východ" or self.station == "Žilina-Hájik" or self.station == "Lučivná":
+            pass
+        else:
+            if stations[self.station][self.track] == False:
+                stations[self.station][self.track] = True
 
         time.sleep(2)
 
@@ -71,7 +73,7 @@ stations = [
     [True] #...
 ]
 
-if game == True:
+while game == True:
     #Podmienka pre pokračovanie s užívateľským menom
     if user_name != "":
         #Privítanie + pokyny
@@ -94,78 +96,57 @@ if game == True:
                 print("")
                 print("Tvoje skóre: ", score)
                 print("")
+                print("Zoznam vlakov čakajúcich na spracovanie:")
                 print("Id:     Kategória:     Číslo:     Počiatočná stanica:     Konečná stanica:     Meškanie:     Max.rýchlosť:")
                 
                 i = 0
                 train_id = 0
+                field_lenght = len(train_field)
                 
-                
-
+                #Cyklus pre generovanie
                 while i < level:
-                    field_lenght = len(train_field)
-                    false_lenght = field_lenght - 1
-                    if not train_field or false_lenght < i:
-                        #Získanie premenných z vlastných funkcií
-                        train_category = functions.GetTrainCategory(train_categories)
-                        train_number = functions.GetTrainNumber(train_category)
+                    #Získanie premenných z vlastných funkcií
+                    train_category = functions.GetTrainCategory(train_categories)
+                    train_number = functions.GetTrainNumber(train_category)
+                    train_first_station = functions.GetTrainFirstStation(train_stations)
+                    train_second_station = functions.GetTrainSecondStation(train_stations,train_first_station)
+                    train_delay = functions.GetTrainDelay(train_delays)
+                    train_speed = functions.GetTrainSpeed(train_category)
+
+                    #Ošetrenie generovania rovnakých staníc
+                    while train_first_station == train_second_station:
                         train_first_station = functions.GetTrainFirstStation(train_stations)
                         train_second_station = functions.GetTrainSecondStation(train_stations,train_first_station)
-                        train_delay = functions.GetTrainDelay(train_delays)
-                        train_speed = functions.GetTrainSpeed(train_category)
 
-                        #Ošetrenie generovania rovnakých staníc
-                        while train_first_station == train_second_station:
-                            train_first_station = functions.GetTrainFirstStation(train_stations)
-                            train_second_station = functions.GetTrainSecondStation(train_stations,train_first_station)
+                    #Vyhodenie stringov z poľa
+                    for item in train_category:
+                        train_category = item
 
-                        #Vyhodenie stringov z poľa
-                        for item in train_category:
-                            train_category = item
+                    for item in train_first_station:
+                        train_first_station = item
 
-                        for item in train_first_station:
-                            train_first_station = item
+                    for item in train_second_station:
+                        train_second_station = item
 
-                        for item in train_second_station:
-                            train_second_station = item
+                    for item in train_delay:
+                        train_delay = item
 
-                        for item in train_delay:
-                            train_delay = item
+                    if while_counter == level:
+                        train_field.insert(i,functions.ToField(train_id,train_category,train_number,train_first_station,train_second_station,train_delay,train_speed))
+                    else:
+                        pass
 
-                        check = open("check.txt", "a")
-                        check.write(str(i))
-                        check.close
-                        check = open("check.txt","r")
-
-                        if while_counter == level:
-                            train_field.insert(i,functions.ToField(train_id,train_category,train_number,train_first_station,train_second_station,train_delay,train_speed))
-                        else:
-                            pass
-
-                            #for x in check:
-                             #   if x == str(i):
-                              #      pass
-                               # elif x == 0:
-                                #    pass
-                                #else:
-                                 #   train_field.insert(i,functions.ToField(train_id,train_category,train_number,train_first_station,train_second_station,train_delay,train_speed))
-                            
-                    
                     functions.PrintField(train_field,i)
                     train_id += 1
                     i += 1
                     
-                #Opakovanie do vyčerpania poľa
+
                 while_counter += 1
                 print("")
-                print("Zoznam vlakov čakajúcich na spracovanie:")
-
                 selected_id = int(input("Vyber si vlak, ktorý chceš odbaviť tým, že napíšeš jeho id: "))
 
-                if level == 1:
-                    selected_id -= 1
-
                 #Ošetrenie nesprávne zadaného id-čka
-                while field_lenght <= (selected_id):
+                while selected_id in train_field:
                     print("Nevybral si správne vlak.")
                     selected_id = int(input("Vyber si vlak, ktorý chceš odbaviť tým, že napíšeš jeho id: "))
                 
@@ -182,15 +163,19 @@ if game == True:
                 if train_station == ['']:
                     print("Vlak ", train_category, train_number, " nemá žiadne medziľahlé stanice.")
                     time.sleep(1)
-                    print("")
-                    print("Teraz treba vybrať koľaje v jednotlivých staniciach, kde vlak zastavuje.")
 
-                    #Výpis voľnosti koľají
-                    print("Stanica ", train_second_station)
-                    track_auto_number = 0
-                    item = functions.GetItem(train_second_station)
-                    Track(item,track_auto_number).StillFree(stations)
-                    track_auto_number += 1
+                    if train_second_station == "...":
+                        pass
+                    else:
+                        print("")
+                        print("Teraz treba vybrať koľaje v jednotlivých staniciach, kde vlak zastavuje.")
+
+                        #Výpis voľnosti koľají
+                        print("Stanica ", train_second_station)
+                        track_auto_number = 0
+                        item = functions.GetItem(train_second_station)
+                        Track(item,track_auto_number).StillFree(stations)
+                        track_auto_number += 1
                 else:
                     print("Medziľahlé stanice vlaku ", train_category, train_number, " sú: ", train_station)
                     time.sleep(1)
@@ -209,13 +194,16 @@ if game == True:
                             Track(item,track_auto_number).StillFree(stations)
                             track_auto_number += 1
 
-                    print("Stanica ", train_second_station)
-                    track_auto_number = 0
-                    item = functions.GetItem(train_second_station)
-                    Track(item,track_auto_number).StillFree(stations)
-                    track_auto_number += 1
+                    if train_second_station == "...":
+                        pass
+                    else:
+                        print("Stanica ", train_second_station)
+                        track_auto_number = 0
+                        item = functions.GetItem(train_second_station)
+                        Track(item,track_auto_number).StillFree(stations)
+                        track_auto_number += 1
 
-                if level <= 5 and (train_first_station == ['Tekovany'] or train_second_station == ['Tekovany']):
+                if level <= 5 and (train_first_station == 'Tekovany' or train_second_station == 'Tekovany'):
                     print("POZOR!!! V žst. Žilina musí ísť vlak na koľaj 6, 7 alebo 8!")
 
                 print("")
@@ -226,41 +214,44 @@ if game == True:
                     if item == 'Prievidza' or item == 'Nováky' or item == 'Žilina' or item == 'Čadca' or item == 'Kraľovany':
                         print("Koľaj v stanici ", item, ": ", end='')
                         track_number = int(input()) - 1
-
                         item = functions.GetItem(item)
-
                         Track(item,track_number).IsFree(stations)
                     elif item == "" or item == "...":
                         pass
 
                 #Zadanie koľaje poslednej stanice
-                if item == "Prievidza" or item == "Žilina" or item == "Čadca" or item == "Kraľovany":
-                    print("Koľaj v konečnej stanici ", item,": ", end='')
+                if train_second_station == "Prievidza" or train_second_station == "Žilina" or train_second_station == "Čadca" or train_second_station == "Kraľovany":
+                    print("Koľaj v konečnej stanici ", train_second_station,": ", end='')
                     track_number = int(input()) - 1
-
-                    item = functions.GetItem(item)
-
+                    item = functions.GetItem(train_second_station)
                     Track(item,track_number).IsFree(stations)
-                elif item == "...":
+                elif train_second_station == "...":
                     pass
+                elif train_second_station == "Tekovany":
+                    print("Koľaj v konečnej stanici ", train_second_station,": 1")
+                    item = functions.GetItem(train_second_station)
+                    Track(item,0).IsFree(stations)
 
-                #Začiatok riešenia pohybu vlaku
+                #Riešenie pohybu vlaku
                 print("")
-
                 print(train_category, train_number, " odchádza zo stanice ", train_first_station)
+                time.sleep(2)
 
                 if train_station == ['']:
-                    print(train_category, train_number, " prichádza do stanice ", train_second_station)
+                    print(train_category, train_number, " ukončil svoju jazdu v stanici ", train_second_station)
                 else:
                     for item in train_station:
                         item = functions.GetItem(item)
-                        train_second_station = functions.GetNameOfStation(item)
+                        x = functions.GetNameOfStation(item)
 
-                        if train_second_station != train_second_station and train_second_station != "...":
+                        if x != "...":
                             Track(item,track_number).Sequence(train_category,train_number,stations)
                             
-                    print(train_category, train_number, " prichádza do stanice ", train_second_station)
+                    print(train_category, train_number, " ukončil svoju jazdu v stanici ", train_second_station)
 
+                time.sleep(2)
+
+                #Vymazanie vlaku
                 train_field.pop(selected_id)
 
                 score += 10
@@ -268,13 +259,9 @@ if game == True:
                 if not train_field:
                     level += 1
                     while_counter = level
-                    check.close()
-                    os.remove("check.txt")   
 
-                print(level)
-                print(train_field)
-
-            #GameOver
+        else:
+            #GameOver 
             if score < 0:
                 print(user_name, " prehral si!")
                 game = False
