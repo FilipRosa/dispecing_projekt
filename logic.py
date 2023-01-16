@@ -51,7 +51,7 @@ user_name = input("Zadaj svoje meno: ")
 
 #Dáta
 score = 0
-level = 1
+level = 1000000
 train_categories = ['Os','Zr','R']
 train_stations = ['Prievidza','Žilina','Čadca','Kraľovany','Tekovany','...']
 train_delays = [0, 5, 10]
@@ -85,7 +85,8 @@ while game == True:
         #Podmienka pre ukončenie hry so skóre < 0
         if score >= 0:
             train_field = []
-            while_counter = 1
+            while_counter = 1000000
+            while_counter_2 = 1
 
             #Cyklus pre opakovanie
             while True:
@@ -145,13 +146,22 @@ while game == True:
                 print("")
                 selected_id = int(input("Vyber si vlak, ktorý chceš odbaviť tým, že napíšeš jeho id: "))
 
+                print(while_counter_2)
+                if while_counter_2 > 1 and field_lenght > 0:
+                    if while_counter_2 > 2:
+                        for item in train_field:
+                            x = item['train_id']
+                            print(x)
+                            selected_id -= int(x)
+                            break
+                    else:
+                        selected_id -= 1
+
                 #Ošetrenie nesprávne zadaného id-čka
                 while selected_id in train_field:
                     print("Nevybral si správne vlak.")
                     selected_id = int(input("Vyber si vlak, ktorý chceš odbaviť tým, že napíšeš jeho id: "))
 
-
-                
                 #Premenné pre vybraný vlak
                 selected_train = train_field[selected_id]
                 train_category = selected_train['train_category']
@@ -246,7 +256,7 @@ while game == True:
                         item = functions.GetItem(item)
                         x = functions.GetNameOfStation(item)
 
-                        if x != "...":
+                        if x != "..." and x != "Žilina":
                             Track(item,track_number).Sequence(train_category,train_number,stations)
                             
                     print(train_category, train_number, " ukončil svoju jazdu v stanici ", train_second_station)
@@ -261,6 +271,9 @@ while game == True:
                 if not train_field:
                     level += 1
                     while_counter = level
+                    while_counter_2 = 1
+                else:
+                    while_counter_2 += 1
 
         else:
             #GameOver 
