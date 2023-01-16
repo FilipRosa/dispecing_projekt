@@ -1,5 +1,6 @@
 import functions
 import time
+from PIL import Image
 
 class Track:
     def __init__(self,station,track):
@@ -7,12 +8,16 @@ class Track:
         self.track = track
 
     #Funkcia na zistenie voľnosti koľaje
-    def IsFree(self,stations): 
+    def IsFree(self,stations):
+        #if self.track not in stations[self.station]:
+        #    return "Koľaj neexistuje."
         if stations[self.station][self.track] == True:
             stations[self.station][self.track] = False
-            print("Žiadosť o obsadenie koľaje úspešná.")
+            return "Žiadosť o obsadenie koľaje úspešná."
         elif stations[self.station][self.track] == False:
-            print("Koľaj obsadená.")
+            return "Koľaj obsadená."
+        else:
+            return "Koľaj neexistuje."
 
     #Funkcia na vypísanie obsadenosti koľají
     def StillFree(self,stations):
@@ -51,12 +56,11 @@ user_name = input("Zadaj svoje meno: ")
 
 #Dáta
 score = 0
-level = 1000000
+level = 1
 train_categories = ['Os','Zr','R']
 train_stations = ['Prievidza','Žilina','Čadca','Kraľovany','Tekovany','...']
 train_delays = [0, 5, 10]
 game = True
-
 
 stations = [
     [True,True,True,True,True,True], #prievidza
@@ -79,13 +83,21 @@ while game == True:
         #Privítanie + pokyny
         print("Ahoj " + user_name + ", vitaj v hre VLAKOVÝ DISPEČING!")
         time.sleep(0.5)
-        print("...pokyny...")
+        print("Za chvíľu sa vypíšu pokyny na hranie hry.")
         time.sleep(2)
+        print("")
+        print("")
+        readme = open("rules.txt","r")
+        print(readme.read())
+        time.sleep(50)
+
+        scheme = Image.open("scheme.png")
+        scheme.show()
 
         #Podmienka pre ukončenie hry so skóre < 0
         if score >= 0:
             train_field = []
-            while_counter = 1000000
+            while_counter = 1
             while_counter_2 = 1
 
             #Cyklus pre opakovanie
@@ -146,12 +158,11 @@ while game == True:
                 print("")
                 selected_id = int(input("Vyber si vlak, ktorý chceš odbaviť tým, že napíšeš jeho id: "))
 
-                print(while_counter_2)
+                #Zníženie id
                 if while_counter_2 > 1 and field_lenght > 0:
                     if while_counter_2 > 2:
                         for item in train_field:
                             x = item['train_id']
-                            print(x)
                             selected_id -= int(x)
                             break
                     else:
@@ -227,7 +238,14 @@ while game == True:
                         print("Koľaj v stanici ", item, ": ", end='')
                         track_number = int(input()) - 1
                         item = functions.GetItem(item)
-                        Track(item,track_number).IsFree(stations)
+                        
+                        occupation = Track(item,track_number).IsFree(stations)
+                        print(occupation)
+
+                        if occupation == "Koľaj obsadená.":
+                            score -= 5
+                            print("Znížilo sa ti skóre za zle obsadenú koľaj.")
+
                     elif item == "" or item == "...":
                         pass
 

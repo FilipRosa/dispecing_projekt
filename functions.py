@@ -312,3 +312,8 @@ def PrintField(train_field,i):
     for item in train_field:
         if item['train_id'] == i:
             print(f"{str(item['train_id']):<10}{str(item['train_category']):<14}{str(item['train_number']):<14}{str(item['train_first_station']):<23}{str(item['train_second_station']):<22}{str(item['train_delay']):<16}{str(item['train_speed'])}")
+
+#funkcia pre zníženie skóre po zistení zlej koľaje
+def ScoreLow(occupation):
+    if occupation == "Koľaj obsadená.":
+        return 5

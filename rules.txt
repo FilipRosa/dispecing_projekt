@@ -1,0 +1,16 @@
+Navod na hranie hry VLAKOVY DISPECING
+
+Vitaj na smene vlakoveho dispecera na trati Prievidza - Kralovany.
+
+1. Po spusteni hry sa zobrazi tabulka so zoznamom vlakov, ktory musis cely odbavit.
+2. Kazdy vlak ma svoje ID, kategoriu, cislo, vychodziu a konecnu stanicu, meskanie a maximalnu rychlost vlaku.
+3. Musis sa rozhodnut, ktory vlak sa rozhodnes odbavit ako prvy. Samozrejme pozor si musis davat sa stanice vlakov. Ak si vyberies vlak napr. s konecnou stanicou Tekovany, 
+   tak vlak v stanici ostava pokym si nevyberies vlak s pociatocnou stanicou Tekovany, t.j. hra si pamata stav obsadenia kolaji.
+	Doporucene poradie odbavovania vlakov:
+		Kategoria: R - Zr - Os
+		Meskanie: cim vacsie, tym vacsia priorita
+
+4. Vlak si vyberas napisanim jeho ID.
+5. Vypisu sa nacestne stanice a stav obsadenia kolaji v tychto staniciach.
+6. Podla schemy, ktora sa otvori po zatvoreni tohto suboru napises cislo kolaje, na ktoru chces vlak poslat.
+7. Vlak sa sam vypravi zo stanice.
