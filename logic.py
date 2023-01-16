@@ -43,6 +43,8 @@ class Track:
         else:
             if stations[self.station][self.track] == False:
                 stations[self.station][self.track] = True
+            else:
+                pass
 
         time.sleep(2)
 
@@ -275,14 +277,41 @@ if user_name != "":
             print("Koľaj v konečnej stanici ", train_second_station,": ", end='')
             track_number = int(input()) - 1
             item = functions.GetItem(train_second_station)
-            Track(item,track_number).IsFree(stations)
+            occupation = Track(item,track_number).IsFree(stations)
+            print(occupation)
+
+            #Ošetrenie nesprávnej koľaje
+            while track_number >= Track(item,track_auto_number).TrackNumber(stations):
+                score -= 5
+                print("Neexistujúca koľaj, -5 skóre")
+                print("Koľaj v stanici ", functions.GetNameOfStation(item) , ": ", end='')
+                track_number = int(input()) - 1
+
+            #Ošetrenie obsadenej koľaje
+            while occupation == "Koľaj obsadená.":
+                score -= 5
+                print("Znížilo sa ti skóre za poslanie vlaku na obsadenú koľaj.")
+                print("Koľaj v stanici ", functions.GetNameOfStation(item) , ": ", end='')
+                track_number = int(input()) - 1
+                occupation = Track(item,track_number).IsFree(stations)
+                print(occupation)
+
+            #Ošetrenie Žiliny
+            if item == 5 and track_number < 5 and (train_first_station == "Tekovany" or train_second_station == "Tekovany"):
+                while track_number < 5 or track_number > 9:
+                    print("V žst. Žilina musí ísť vlak na koľaj 6, 7 alebo 8!")
+                    score -= 5
+                    print("-5 skóre")
+                    print("Koľaj v stanici ", "Žilina" , ": ", end='')
+                    track_number = int(input()) - 1
+
         elif train_second_station == "...":
             pass
         elif train_second_station == "Tekovany":
             print("Koľaj v konečnej stanici ", train_second_station,": 1")
             item = functions.GetItem(train_second_station)
             occupation = Track(item,0).IsFree(stations)
-
+            print(occupation)
             #Obsadená koľaj v Tekovanoch
             if occupation == "Koľaj obsadená.":
                 print("Koľaj v stanici ", functions.GetNameOfStation(item) , " obsadená, nemôžeš naňu poslať vlak. Preto sa hra končí.", end='')
@@ -301,7 +330,7 @@ if user_name != "":
                 item = functions.GetItem(item)
                 x = functions.GetNameOfStation(item)
 
-                if x != "..." and x != "Žilina":
+                if x != "...":
                     Track(item,track_number).Sequence(train_category,train_number,stations)
                     
             print(train_category, train_number, " ukončil svoju jazdu v stanici ", train_second_station)
@@ -315,7 +344,7 @@ if user_name != "":
         if score < 0:
             print(user_name, " prehral si!")
             print("Tvoje skóre: ", score)
-            print("Tvoj dosiahnutý level: ", score)
+            print("Tvoj dosiahnutý level: ", level)
             break
         else:
             score += 10
